@@ -1,41 +1,52 @@
--- Create the database if it doesn’t exist
+-- Create the database
 CREATE DATABASE IF NOT EXISTS alx_book_store;
 
--- Switch to that database
+-- Use the database
 USE alx_book_store;
 
--- 1. Authors Table (must exist before Books)
+-- ================================
+-- 1. Authors Table
+-- ================================
 CREATE TABLE IF NOT EXISTS authors (
     author_id INT PRIMARY KEY,
     author_name VARCHAR(215) NOT NULL
 );
 
--- 2. Books Table (depends on Authors)
+-- ================================
+-- 2. Books Table
+-- ================================
 CREATE TABLE IF NOT EXISTS books (
     book_id INT PRIMARY KEY,
     title VARCHAR(130) NOT NULL,
-    author_id INT,
-    price DOUBLE,
+    author_id INT NOT NULL,
+    price DOUBLE NOT NULL,
     publication_date DATE,
     FOREIGN KEY (author_id) REFERENCES authors(author_id)
 );
 
--- 3. Customers Table (independent)
+-- ================================
+-- 3. Customers Table
+-- ================================
 CREATE TABLE IF NOT EXISTS customers (
     customer_id INT PRIMARY KEY,
     customer_name VARCHAR(215) NOT NULL,
-    email VARCHAR(215) UNIQUE,
+    email VARCHAR(215) UNIQUE NOT NULL,
     address TEXT
 );
 
+-- ================================
+-- 4. Orders Table
+-- ================================
 CREATE TABLE IF NOT EXISTS orders (
     order_id INT PRIMARY KEY,
     customer_id INT NOT NULL,
-    order_date DATE,
+    order_date DATE NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
 
--- 5. Order_Details Table (depends on Orders + Books)
+-- ================================
+-- 5. Order_Details Table
+-- ================================
 CREATE TABLE IF NOT EXISTS order_details (
     orderdetailid INT PRIMARY KEY,
     order_id INT NOT NULL,
