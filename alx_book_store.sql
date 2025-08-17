@@ -28,10 +28,9 @@ CREATE TABLE IF NOT EXISTS customers (
     address TEXT
 );
 
--- 4. Orders Table (depends on Customers)
 CREATE TABLE IF NOT EXISTS orders (
     order_id INT PRIMARY KEY,
-    customer_id INT,
+    customer_id INT NOT NULL,
     order_date DATE,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
@@ -39,10 +38,9 @@ CREATE TABLE IF NOT EXISTS orders (
 -- 5. Order_Details Table (depends on Orders + Books)
 CREATE TABLE IF NOT EXISTS order_details (
     orderdetailid INT PRIMARY KEY,
-    order_id INT,
-    book_id INT,
+    order_id INT NOT NULL,
+    book_id INT NOT NULL,
     quantity DOUBLE NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (book_id) REFERENCES books(book_id)
 );
-
